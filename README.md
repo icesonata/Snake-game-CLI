@@ -4,7 +4,7 @@ Snake game in Linux command line.
 # Prerequisite
 - python 3
 - readchar
-> pip install readchar 
+>> pip install readchar 
 
 # Note
 - Open terminal in full screen mode for better experience. Otherwise, there might lead to bad visual performance. 
