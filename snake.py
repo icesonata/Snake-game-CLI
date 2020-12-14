@@ -1,8 +1,8 @@
 import threading, queue, os, copy, time, random, sys, readchar
 
 #Board's size
-ColSize = 50
-RowSize = 25
+height = 50
+width = 25
 
 #queue to manage threads
 inputQueue = queue.Queue()
@@ -41,7 +41,7 @@ class Snake(object):
 
 #
 def initField():
-    field = [[0 for j in range(ColSize)] for i in range(RowSize)]
+    field = [[0 for j in range(height)] for i in range(width)]
     return field
 #
 def clearScreen():
@@ -55,7 +55,7 @@ def getKey():
             sys.exit()
 #
 def checkCollision(snake):
-    if snake.part[0].x > ColSize-1 or snake.part[0].x < 0 or snake.part[0].y > RowSize-1 or snake.part[0].y < 0:
+    if snake.part[0].x > height-1 or snake.part[0].x < 0 or snake.part[0].y > width-1 or snake.part[0].y < 0:
         return True
     for i in range(len(snake.part)-1):  #range [0,len(snake.part)-1]
         for j in range(i+1,len(snake.part)):  #range [i,len(snake.part)]
@@ -68,7 +68,7 @@ def mergeToField(field,snake,point):
     field[point.y][point.x] = 1
     #merge snake to field
     for i in range(len(snake.part)):
-        if snake.part[i].x <= ColSize-1 and snake.part[i].x >= 0 and snake.part[i].y <= RowSize-1 and snake.part[i].y >= 0:
+        if snake.part[i].x <= height-1 and snake.part[i].x >= 0 and snake.part[i].y <= width-1 and snake.part[i].y >= 0:
             field[snake.part[i].y][snake.part[i].x] = 1
 #
 def display(field,score):
