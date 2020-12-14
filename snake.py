@@ -96,7 +96,7 @@ def display(field,score):
                     print("\033[0;37;47m[]\033[m",end = "")
         print("||")
     print("\rPress:\n\rW - Go up, S - Go down, A - Go left, D - Go right")
-    print("\rX with Ctrl + Z to exit the game")
+    print("\rX to exit the game")
 #
 def sleep(t):
     time.sleep(t)
@@ -111,6 +111,10 @@ def randomPoint():
 def doMovement(snake,directvector,vectorup,vectordown,vectorleft,vectorright,inputQueue):
     if not inputQueue.empty():
         key = inputQueue.get()
+
+        if(key == "x" or key == "X"):
+            sys.exit()
+
         if (key == "w" or key == "W") and snake.direct != 3:   #go up
             snake.direct = 1
             directvector.setCoordinate(vectorup)
@@ -151,22 +155,28 @@ def SnakeGame(vectorup,vectordown,vectorleft,vectorright,inputQueue):
             if not inputQueue.empty():
                 snake, directvector, inputQueue = doMovement(snake,directvector,vectorup,vectordown,vectorleft,vectorright,inputQueue)
                 inputQueue.queue.clear()
+            
             if point.x == snake.part[0].x and point.y == snake.part[0].y:
                 score += 20
                 tempPoint.setCoordinate(snake.part[len(snake.part)-1])
                 flag = True
                 del point
                 point = randomPoint()
+            
             snake.movement(directvector)
             field = copy.deepcopy(newField)
             mergeToField(field,snake,point)
             display(field,score)
+            
             if flag == True:
                 snake.part.append(Point(tempPoint.x,tempPoint.y))
+            
             preSec = int(round(time.time()*1000))
+        
         if checkCollision(snake):
             print("\r\033[1;31mGAME OVER\033[m")
             sys.exit()
+        
         sleep(0.01)
 
 #initialize threads
